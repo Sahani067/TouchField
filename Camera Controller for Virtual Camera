@@ -1,0 +1,27 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CameraController : MonoBehaviour
+{
+    [SerializeField] float _Sensitivity;
+    [SerializeField] float _MinX;
+    [SerializeField] float _MaxX;
+
+    [SerializeField] GameObject _cameraRoot;
+
+    public TouchField _touchfield;
+
+    float _xInput;
+    float _yInput;
+
+    void Update()
+    {
+        _xInput += _touchfield.TouchDist.x * _Sensitivity;
+        _yInput += _touchfield.TouchDist.y * -_Sensitivity;
+
+        _yInput = Mathf.Clamp(_yInput, _MinX, _MaxX);
+
+        _cameraRoot.transform.rotation = Quaternion.Euler(_yInput , _xInput, 0f);
+    }
+}
